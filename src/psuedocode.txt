@@ -1,0 +1,24 @@
+If obstacle detected:
+
+- Turn motors off
+- set bit matrix element at distance and direction from front
+- set queue to back up & flag to notify once finshed backing up
+- when receiving flag, set queue to:
+- Rotate toward new waypoint, drive a distance, and repeat
+
+bool completed;
+
+Vec2 nextWaypoint{};
+Vec2 currOrigin{};
+
+while(!completed){
+    castRayFan(currOrigin in direction of destination);
+
+    for(int i = 0; i < numCasts - 1; ++i){
+        if(r[i].k == r[i+1].k && r[i].k == 0.f){
+            nextWaypoint = r[i];
+            currOrigin = r[i];
+            if(castRay(from point to destination).k == 0.f) completed = true;
+        }
+    }
+}
