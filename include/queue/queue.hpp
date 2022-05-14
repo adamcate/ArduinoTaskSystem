@@ -8,10 +8,11 @@
 #define RIGHT       1
 
 #define MAX_PARAMS  5
-#define MAX_TASKS   15
+#define MAX_TASKS   5
 
 
 // Type to hold Task information, uses ID for identification
+
 struct Task{
     s8 ID = T_EMPTY;
     s16 params[MAX_PARAMS]{};

@@ -11,9 +11,7 @@
 #define T_WAIT_T    0x4
 #define T_ROTATE    0x5
 #define T_HALT      0x6
-#define T_DRIVE_UNTIL 0x7
 #define T_DRIVE_H   0x8
-#define T_DRIVE_D   0x9
 
 // Task constructor macros:
 #define EMPTY()                                     Task(0,0,0,0,0,0,T_EMPTY)
@@ -23,9 +21,7 @@
 #define HALT(time)                                  Task(0,0,0,0,0,time,T_HALT)
 #define ROTATE(angle)                               Task(angle,0,0,0,0,0,T_ROTATE)
 #define WAIT_T(time)                                Task(0,0,0,0,0,time,T_WAIT_T)
-#define DRIVE_UNTIL(left,right,flag)                Task(left,right,flag,0,0,0,T_DRIVE_UNTIL)
 #define DRIVE_STABLE(speed,time)                    Task(speed,0,0,0,0,time,T_DRIVE_H)
-#define DRIVE_DIST(speed,distance)                  Task(speed,distance,0,0,0,0,T_DRIVE_D)
 
 // Completion interrupt flags:
 #define INTR_EMPTY          0x0

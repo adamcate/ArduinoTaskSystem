@@ -1,7 +1,7 @@
 #include "queue/queue.hpp"
 #include "queue/driving.hpp"
 #include "mathLib/angles.hpp"
-//#include <Arduino.h>
+#include "Arduino.h"
 
 
 Task::Task(){}
@@ -12,6 +12,7 @@ Task::Task(s16 args[], s16 numArgs,s8 ID){
         params[i] = args[i];
     this->ID = ID;
 }
+
 Task::Task(s16 a,s16 b,s16 c,s16 d,s16 e, s16 f, s8 ID){
     params[0] = a;
 	params[1] = b;
@@ -29,13 +30,13 @@ Task::Task(const Task& task){
     completionInterrupt = task.completionInterrupt;
     interruptID = task.interruptID;
 }
+
 Task& Task::operator=(const Task& second){
     for(int i =0; i < MAX_PARAMS; ++i) params[i] = second.params[i];
     ID = second.ID;
     interruptID = second.interruptID;
     return *this;
 }
-// Queue constructors
 
 Queue::Queue(){
     curr = &tasks[0];
@@ -185,45 +186,10 @@ void Queue::executeAction(){	// really gross long switch statement
                 wheelSpeed[1] = curr->params[0];
             }
             break;
-        case T_DRIVE_D:
-            difference = angleDiff(sentinel[2],sentinel[0]);
-            
-            if(fabsf(difference) >= 10.f)
-            {
-                
-                if(difference > 0.f)
-                {
-                    wheelSpeed[0] = (float)curr->params[0];
-                    wheelSpeed[1] = (float)curr->params[0] - difference;
-
-                    drive(wheelSpeed[0],wheelSpeed[1]);
-                }
-                else{
-                    wheelSpeed[0] = (float)curr->params[0] + difference;
-                    wheelSpeed[1] = (float)curr->params[0];
-
-                    drive(wheelSpeed[0],wheelSpeed[1]);
-                }
-                //else if (difference < 0.f) drive(curr->params[0] - 10 * difference, curr->params[0]);
-            }
-            else{
-                drive(curr->params[0],curr->params[0]);
-                wheelSpeed[0] = curr->params[0];
-                wheelSpeed[1] = curr->params[0];
-            }
-            f32 disp = magnitude(Vec2(sentinel[5],sentinel[6])-Vec2(sentinel[7],sentinel[8]));
-            /*Serial.print("p: ");
-                Serial.println(disp);*/
-            if(disp >= (f32)curr->params[1] / 100.f){
-                
-                beginNext();
-                return;
-            }
-            break;
         default:
             break;
     }
-    if(timeAccumulator >= curr->params[5] && curr->ID != T_DRIVE_D){
+    if(timeAccumulator >= curr->params[5]){
         beginNext();
         return;
     }

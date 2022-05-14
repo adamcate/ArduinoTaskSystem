@@ -1,7 +1,10 @@
 #pragma once
 #include "types.h"
+
 /*
 Code to reduce the memory footprint of boolean-like matricies by a factor of 8.
+Useful for representing large amounts of data that would otherwise take up too much
+RAM.
 */
 
 
